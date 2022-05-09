@@ -14,8 +14,8 @@ function App() {
     <div className="App App-header">
       
         <Provider store={store}>
-          {/* <Upload></Upload> */}
-          <Form></Form>
+          <Upload></Upload>
+          {/* <Form></Form> */}
         </Provider>
     
     </div>

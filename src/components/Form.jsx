@@ -15,98 +15,39 @@ import { RiTable2 } from "react-icons/ri";
 import { IoSnowOutline } from "react-icons/io5";
 import { RiWheelchairLine } from "react-icons/ri";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom'
+//import { useNavigate } from 'react-router-dom'
 
 
 
 export default function Form() {
     const options = [
-        {value: 'אבו טור'},
-        {value: 'אבו תור'},
-        {value: 'ארמון הנציב'},
-        {value: 'ארנונה (תלפיות)'},
-        {value: 'בית הכרם'},
-        {value: 'בית וגן'},
-        {value:'בית ישראל'},
-        {value:'בית צפאפא'},
-        {value:'בקעה'},
-        {value: 'גאולה'},
-        {value: 'גבעת המבתר'},
-        {value: 'גבעת מרדכי'},
-        {value:'גבעת משואה'},
-        {value: 'גבעת רם'},
-        {value: 'גבעת שאול'},
-        {value:'גילה'},
-        {value:'הבוכרים'},
-        {value: 'הגבעה הצרפתית'},
-        {value: 'המושבה הגרמנית'},
-        {value:'הר חוצבים'},
-        {value:'הר נוף'},
-        {value:'הרובע היהודי'},
-        {value:'זכרון משה'},
-        {value:'טלביה'},
-        {value:'ימין משה'},
-        {value:'כרם אברהם'},
-        {value:'מאה שערים'},
-        {value:'מוסררה'},
-        {value:'ממילא'},
-        {value:'מלחה'},
-        {value:'מעלת דפנה'},
-        {value:'מקור ברוך'},
-        {value:'מקור חיים'},
-        {value:'מרכז העיר'},
-        {value:'מתחם הולילנד'},
-        {value:'נוה יעקב'},
-        {value:'נוף הציון'},
-        {value:'נחלאות'},
-        {value:'ניות'},
-        {value:'סנהדריה'},
-        {value:'עין כרם'},
-        {value:'עיר גנים'},
-        {value:'פסגת זאב'},
-        {value:'פת'},
-        {value:'קטמון א-ו'},
-        {value:'קטמון הישנה'},
-        {value:'קטמון ח-ט'},
-        {value:'קרית היובל'},
-        {value:'קרית הלאום'},
-        {value:'קרית מנחם'},
-        {value:'קרית משה'},
-        {value:'רוממה'},
-        {value:'רחביה'},
-        {value:'רמות'},  
-        {value:'רמת אשכול'},
-        {value:'רמת בית הכרם'},
-        {value:'רמת דניה'},
-        {value:'רמת רחל'},
-        {value:'רמת שלמה'},
-        {value:'רמת שרת'},
-        {value:'רסקו (גבעת הורדים)'},
-        {value:'שיכוני תלפיות'},
-        {value:'שמואל הנביא'},
-        {value:'שערי חסד'},
-        {value:'תלפיות'}  
+        {value: 'Architecture'},
+        {value: 'CompPrograming'},
+        {value: 'GraphicsAndDesign'},
+        {value: 'Education'},
+        {value: 'OfficeManagement'},
+        {value: 'Accounting'},
     ];
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const mysubmit = (values) => {
 
         console.log(values)
 
         axios({
             method: "POST",
-            url: "http://127.0.0.1:5000/aaa",
+            url: "https://localhost:44331/api/Resumes",
             data: values
         })
-            .then((response) => {
-                // alert(response.data)
-                navigate('/Output/', { state: { data: response.data } })
-            }).catch((error) => {
-                if (error.response) {
-                    console.log(error.response)
-                    console.log(error.response.status)
-                    console.log(error.response.headers)
-                }
-            })
+            // .then((response) => {
+            //     // alert(response.data)
+            //    // navigate('/Output/', { state: { data: response.data } })
+            // }).catch((error) => {
+            //     if (error.response) {
+            //         console.log(error.response)
+            //         console.log(error.response.status)
+            //         console.log(error.response.headers)
+            //     }
+            // })
     }
     const myformik = useFormik(
         {
@@ -142,31 +83,27 @@ export default function Form() {
     return (
         <form onSubmit={myformik.handleSubmit} style={{ marginLeft: '10%', marginRight: '10%', paddingTop: '12%' }}>
             <div dir="rtl">
-                <h1 style={{ textAlign: 'center' }}> הכנס את פרטי הנכס</h1>
+                <h1 style={{ textAlign: 'center' }}>Enter the job details</h1>
                 <h1> </h1>
                 <br></br>
                 <div className="row" >
-                    {/* <div className="form-group col">
-                        <label htmlFor="neighborhoods">שכונה </label>
-                        <Neighborhoods className="custom-select" required name="neighborhoods" id="neighborhoods"
-                            onChange={myformik.handleChange} defaultValue={myformik.initialValues.neighborhoods}>
-                        </Neighborhoods>
-                    </div> */}
-                    <div className="form-group col">
-                    <label htmlFor="neighborhoods">שכונה </label>
-                    <select className="form-select custom-select"  required name="neighborhoods" id="neighborhoods" 
-                     onChange={myformik.handleChange} defaultValue={myformik.initialValues.neighborhoods}>
-                    {options.map(item => {
-                    return (<option value={item.value}>{item.value}</option>);
-                   })}
+            
+                  <div className="form-group col">
+                        <label htmlFor="neighborhoods">תחום </label>
+                     <select className="form-select custom-select"  required name="neighborhoods" id="neighborhoods" 
+                             onChange={myformik.handleChange} defaultValue={myformik.initialValues.neighborhoods}>
+                             {options.map(item => {
+                             return (<option value={item.value}>{item.value}</option>);
+                             })}
                     </select>
-                    </div>
-                    <div className="form-group col">
+                  </div>
+                   
+                    {/* <div className="form-group col">
                         <label htmlFor="propertyType">סוג הנכס</label>
-                        {/* <PropertyType className="custom-select" required name="propertyType" id="propertyType"
+                        { <PropertyType className="custom-select" required name="propertyType" id="propertyType"
                             onChange={myformik.handleChange} defaultValue={myformik.initialValues.propertyType}>
                         </PropertyType> */}
-                        <select class="form-select custom-select"  required name="propertyType" id="propertyType"
+                        {/* <select class="form-select custom-select"  required name="propertyType" id="propertyType"
                             onChange={myformik.handleChange} defaultValue={myformik.initialValues.propertyType}>
               <option value='3'>דירה</option>
               <option value='0'>בית פרטי</option>
@@ -180,12 +117,12 @@ export default function Form() {
               <option value='7'>יחידת דיור</option>
              
               </select>
-                    </div>
-                    <div className="form-group col">
+                    </div> */} 
+                    {/* <div className="form-group col">
                         <label htmlFor="my_status">מצב הנכס </label>
-                        {/* <My_status className="custom-select" required name="my_status" id="my_status"
+                        { <My_status className="custom-select" required name="my_status" id="my_status"
                             onChange={myformik.handleChange} defaultValue={myformik.initialValues.my_status}>
-                        </My_status> */}
+                        </My_status>}
                         <select class="form-select custom-select" required name="my_status" id="my_status"
                             onChange={myformik.handleChange} defaultValue={myformik.initialValues.my_status}>
                             <option value='0'>חדש</option>
@@ -194,11 +131,11 @@ export default function Form() {
                             <option value='3'>משופץ</option>
                             <option value='4'>שמור</option>
                         </select>
-                    </div>
+                    </div> */}
                 </div>
                 <br></br>
                 <h1></h1>
-                <div className="row">
+                {/* <div className="row">
 
                     <div className="form-group col">
                         <label htmlFor="area" style={{ marginLeft: '4%' }}>שטח הדירה </label>
@@ -304,9 +241,9 @@ export default function Form() {
                     </div>
 
                 </div>
-                <br></br>
-            </div>
-            <button style={{ marginTop: '5%' }} type="submit" dir="ltr" >לחישוב ערך הדירה  </button>
+                <br></br>*/}
+            </div> 
+            <button style={{ marginTop: '5%' }} type="submit" dir="ltr" >לחיפוש עובד מתאים</button>
         </form >
     )
 }

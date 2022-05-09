@@ -68,8 +68,25 @@ export default function Upload(props) {
     //   }
     // })
 
-    axios.get('https://localhost:44331/api/Resumes')
+    axios.post('https://localhost:44331/api/Resumes/UploadResume',formData,{
+
+      // onUploadProgress: (progressEvent) => {
+      //     //how much time need finish
+      //     if (progressEvent.lengthComputable) {
+      //       const copy = { ...uploadProgress };
+      //       copy[files[0].name] = {
+      //         state: "pending",
+      //         percentage: (progressEvent.loaded / progressEvent.total) * 100
+      //       };
+      //       setUploadProgress(copy);
+      //     }
+      //   },
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   }
+      })
       .then(response => {
+        console.log(response.statusText)
         const copy = { ...uploadProgress };
         copy[files[0].name] = { state: "done", percentage: 100 };
         setUploadProgress(copy);
@@ -157,7 +174,7 @@ export default function Upload(props) {
               </div>
 
               <div className='row' key={file.name} >
-                <span className="Filename" className="Row">{file.name}</span>
+                <span  className="Row Filename">{file.name}</span>
                 {renderProgress(file)}
               </div></div>
             );
