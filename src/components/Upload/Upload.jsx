@@ -6,6 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import DocViewer from "react-doc-viewer";
+import { IoCloseCircleOutline } from 'react-icons';
 
 
 export default function Upload(props) {
@@ -13,10 +14,18 @@ export default function Upload(props) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState({});
   const [successfullUploaded, setSuccessfullUploaded] = useState(false);
-  const [result , setResult]=useState([]);
+  const [result, setResult] = useState([]);
+  const [firstTimeDropzone,setfirstTimeDropzone]=useState(true);
 
   const onFilesAdded = (newFiles) => {
-    setFiles(files.concat(newFiles))
+    if(files===[]){
+      setFiles(files.concat(newFiles))
+    }
+    else{
+      setFiles(files[0]=newFiles)
+    }
+    setfirstTimeDropzone(false);
+
   }
   const renderProgress = (file) => {
 
@@ -36,28 +45,30 @@ export default function Upload(props) {
       );
     }
   }
-  
+
   const uploade_file = () => {
     const formData = new FormData();
     formData.append('file', files[0]);
-debugger
-    axios.post( 'https://127.0.0.1:44397/api/Resumes', formData, {
    
-    onUploadProgress: (progressEvent) => {
-        //how much time need finish
-        if (progressEvent.lengthComputable) {
-          const copy = { ...uploadProgress };
-          copy[files[0].name] = {
-            state: "pending",
-            percentage: (progressEvent.loaded / progressEvent.total) * 100
-          };
-          setUploadProgress(copy);
-        }
-      },
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    // axios.post( 'https://127.0.0.1:44397/api/Resumes', formData, {
+
+    // onUploadProgress: (progressEvent) => {
+    //     //how much time need finish
+    //     if (progressEvent.lengthComputable) {
+    //       const copy = { ...uploadProgress };
+    //       copy[files[0].name] = {
+    //         state: "pending",
+    //         percentage: (progressEvent.loaded / progressEvent.total) * 100
+    //       };
+    //       setUploadProgress(copy);
+    //     }
+    //   },
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   }
+    // })
+
+    axios.get('https://localhost:44331/api/Resumes')
       .then(response => {
         const copy = { ...uploadProgress };
         copy[files[0].name] = { state: "done", percentage: 100 };
@@ -90,7 +101,7 @@ debugger
             setSuccessfullUploaded(false)
           }
           }
-          >
+        >
           Clear
         </button>
       );
@@ -108,44 +119,47 @@ debugger
     // console.log(file)
     return (
 
-       <object
-         className="pdf-file" data={URL.createObjectURL(file)} type="application/pdf" width="200%" height="200%">     
-         </object>
-     
-   
+      <object
+        className="pdf-file" data={URL.createObjectURL(file)} type="application/pdf" width="200%" height="200%">
+      </object>
+
+
     )
   }
   return (
     <div className="Upload">
-      <span className="Title">Upload Files</span>
+      <span className="Title">Upload File</span>
       <div className="Content">
         <div>
+          {firstTimeDropzone?
           <Dropzone
+        
             onFilesAdded={onFilesAdded}
             disabled={uploading || successfullUploaded}
-          />
+          /> :<></>}
         </div>
+     
         <div className="Files">
-          {files.map(file => {
-            return (<>
-              <div className="row">
-               <div className="col"> {renderHtmlFileTag(file)}</div>
-               <div className="col text" > 
-               <div>
-               
-                <div className="result overflow-auto">
-                 {result?result.map((res)=>{
-                  return( <><br></br><div><p>{res}</p></div></>)
-                 }):''}
-               </div> 
-               </div>
-               </div> 
-               </div>
+          {files.map((file, i) => {
+            return (<div key={i}>
+              <div  className="row">
+                <div  className="col"> {renderHtmlFileTag(file)}</div>
+                <div className="col text" >
+                  <div>
 
-                <div className='row' key={file.name} >
-                  <span className="Filename" className="Row">{file.name}</span>
-                  {renderProgress(file)}
-                </div></>
+                    <div className="result overflow-auto">
+                      {result ? result.map((res, k) => {
+                        return (<><br></br><div key={k}><p>{res}</p></div></>)
+                      }) : ''}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className='row' key={file.name} >
+                <span className="Filename" className="Row">{file.name}</span>
+                {renderProgress(file)}
+              </div></div>
             );
           })}
         </div>

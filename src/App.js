@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Upload from './components/Upload/Upload'
 import { Provider } from 'react-redux'
 import store from './Redux/store'
-
+import Form from './components/Form'
 
 
 function App() {
@@ -14,7 +14,8 @@ function App() {
     <div className="App App-header">
       
         <Provider store={store}>
-          <Upload></Upload>
+          {/* <Upload></Upload> */}
+          <Form></Form>
         </Provider>
     
     </div>

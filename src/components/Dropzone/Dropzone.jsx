@@ -6,6 +6,7 @@ import './Dropzone.css'
 export default function Dropzone(props){
  const [hightlight,setHightlight]=useState(false);
  const fileInputRef=useRef();
+ 
 
   const openFileDialog=()=> {
     if (props.disabled) return
@@ -78,7 +79,7 @@ export default function Dropzone(props){
           className="Icon"
           src="baseline-cloud_upload-24px.svg"
         />
-        <span>Upload Files</span>
+        <span>Upload resume file</span>
       </div>
     )
   

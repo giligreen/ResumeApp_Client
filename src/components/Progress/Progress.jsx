@@ -11,6 +11,5 @@ export default function Progress(props) {
       />
     </div>
   )
-
 }
 

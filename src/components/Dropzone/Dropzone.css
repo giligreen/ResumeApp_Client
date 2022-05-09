@@ -1,15 +1,16 @@
 .Dropzone {
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 400px;
     background-color: rgba(146, 135, 132, 0.842);
     border: 2px dashed rgb(11, 12, 12);
-    border-radius: 100%;
+    border-radius: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     font-size: 16px;
     margin-left: 5%;
+    
   }
   .Icon {
     opacity: 0.3;
