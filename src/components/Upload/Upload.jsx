@@ -50,23 +50,6 @@ export default function Upload(props) {
     const formData = new FormData();
     formData.append('file', files[0]);
    
-    // axios.post( 'https://127.0.0.1:44397/api/Resumes', formData, {
-
-    // onUploadProgress: (progressEvent) => {
-    //     //how much time need finish
-    //     if (progressEvent.lengthComputable) {
-    //       const copy = { ...uploadProgress };
-    //       copy[files[0].name] = {
-    //         state: "pending",
-    //         percentage: (progressEvent.loaded / progressEvent.total) * 100
-    //       };
-    //       setUploadProgress(copy);
-    //     }
-    //   },
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data'
-    //   }
-    // })
 
     axios.post('https://localhost:44331/api/Resumes/UploadResume',formData,{
 
@@ -86,6 +69,7 @@ export default function Upload(props) {
       //   }
       })
       .then(response => {
+        debugger;
         console.log(response.statusText)
         const copy = { ...uploadProgress };
         copy[files[0].name] = { state: "done", percentage: 100 };
@@ -109,7 +93,8 @@ export default function Upload(props) {
       })
   }
   const renderActions = () => {
-    if (successfullUploaded) {
+    if (successfullUploaded) 
+    {
       return (
         <button
           onClick={() => {
@@ -122,7 +107,8 @@ export default function Upload(props) {
           Clear
         </button>
       );
-    } else {
+    } 
+    else {
       return (
         <button
           disabled={files.length < 0 || uploading}
@@ -133,13 +119,16 @@ export default function Upload(props) {
     }
   }
   const renderHtmlFileTag = (file) => {
-    // console.log(file)
+  
+
     return (
+       //const typeFile=["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
 
       <object
         className="pdf-file" data={URL.createObjectURL(file)} type="application/pdf" width="200%" height="200%">
       </object>
-
+     //  <DocViewer documents={file} />
+    
 
     )
   }
