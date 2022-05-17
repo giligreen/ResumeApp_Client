@@ -14,7 +14,7 @@ export default function Output() {
         })
     return (
         <div dir="rtl" style={{ marginLeft: '20%', marginRight: '20%' }}>
-            <h1 style={{ paddingTop: '15%' }}> מחיר מוערך לנכס:{location.state.data}</h1>
+            <h1 style={{ paddingTop: '15%' }}> מועמדים מתאימים:{location.state.data}</h1>
             <h1></h1>
             <br></br>
             <button onClick={mysubmit} type="submit" dir="ltr" className="form-group col" style={{ marginLeft: '50%',inlineSize:'20%'}}>אישור  </button>

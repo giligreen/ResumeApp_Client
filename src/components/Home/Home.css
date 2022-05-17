@@ -1,0 +1,12 @@
+.entry-button{
+   margin-left: 20px;
+   background-color:rgb(15, 105, 106);
+   border-color:rgb(15, 105, 106);
+   
+
+}
+.entry-button:hover{
+    background-color:rgb(21, 144, 146);
+    border-color:rgb(15, 105, 106);
+  
+}
