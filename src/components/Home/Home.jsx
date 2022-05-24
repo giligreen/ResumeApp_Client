@@ -4,10 +4,12 @@ import './Home.css'
 
 export default function Home() {
     return (
-     <div>
+      
+     <div className='mainDiv'>
         {/* // <nav className="navbar navbar-expand-lg navbar-light bg-light"> */}
         {/* <ul className="navbar-nav mr-auto"> */}
           {/* <li><Link to={'/'} className="nav-link"> Home </Link></li> */}
+      
 
         <Link to={'/jobDetails'}  className="btn btn-primary btn-lg  entry-button" role="button"  >Employer entry</Link>
 
@@ -15,6 +17,7 @@ export default function Home() {
         {/* </ul> */}
         {/* // </nav> */} 
         {/* // className="nav-link" */}
+    
         </div>                                                                                                                                                                                                                                                                                                            
     )
 }

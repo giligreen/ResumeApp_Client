@@ -71,7 +71,7 @@ export default function Dropzone(props){
           multiple
           className="FileInput"
           type="file" 
-          accept=".pdf,.txt,.doc,.docx"
+          accept=".pdf"
           onChange={onFilesAdded}
         />
         <img

@@ -2,11 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Upload from './components/Upload/Upload'
-import Form from './components/Form'
 import Home from './components/Home/Home'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import Output from './components/output'
+import Download from './components/Download/Download';
+import ImageUploader from "react-images-upload";
+import Form from './components/Form/Form';
+
 
 
 function App() {
@@ -14,11 +16,10 @@ function App() {
  return (
     <div className="App App-header"> 
     
-       <Routes >
+        <Routes >
            <Route path="/" element={<Home></Home>}></Route>
            <Route path="/upload" element={ <Upload></Upload>}></Route>
            <Route path="/jobDetails" element={<Form></Form>}></Route>
-           <Route path="/Output/" element={<Output></Output>}></Route>
            <Route
             path="*"
       element={
@@ -27,7 +28,9 @@ function App() {
         </main>
       }
     />
-        </Routes>
+        </Routes> 
+     
+      
     </div>
   );
 }

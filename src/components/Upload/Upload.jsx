@@ -7,6 +7,8 @@ import axios from "axios";
 import { useEffect } from "react";
 import DocViewer from "react-doc-viewer";
 import { IoCloseCircleOutline } from 'react-icons';
+import ImageUploader from "react-images-upload";
+
 
 
 export default function Upload(props) {
@@ -52,21 +54,6 @@ export default function Upload(props) {
    
 
     axios.post('https://localhost:44331/api/Resumes/UploadResume',formData,{
-
-      // onUploadProgress: (progressEvent) => {
-      //     //how much time need finish
-      //     if (progressEvent.lengthComputable) {
-      //       const copy = { ...uploadProgress };
-      //       copy[files[0].name] = {
-      //         state: "pending",
-      //         percentage: (progressEvent.loaded / progressEvent.total) * 100
-      //       };
-      //       setUploadProgress(copy);
-      //     }
-      //   },
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   }
       })
       .then(response => {
         debugger;
@@ -133,12 +120,13 @@ export default function Upload(props) {
     )
   }
   return (
-    <div className="Upload">
+  
+    <div className="Upload mainDiv">
       <span className="Title">Upload File</span>
       <div className="Content">
         <div>
           {firstTimeDropzone?
-          <Dropzone
+          <Dropzone className="drop"
         
             onFilesAdded={onFilesAdded}
             disabled={uploading || successfullUploaded}

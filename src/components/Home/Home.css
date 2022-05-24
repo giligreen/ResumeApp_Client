@@ -1,3 +1,4 @@
+
 .entry-button{
    margin-left: 20px;
    background-color:rgb(15, 105, 106);
@@ -10,3 +11,17 @@
     border-color:rgb(15, 105, 106);
   
 }
+.mainDiv{ 
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-start;
+    text-align: left;
+    overflow: hidden;
+    background-image: url("../../images/bg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover ;
+    height: 100%;
+    width: 100%;
+  }
