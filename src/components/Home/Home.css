@@ -1,14 +1,26 @@
 
-.entry-button{
+#entry-button{
    margin-left: 20px;
-   background-color:rgb(15, 105, 106);
-   border-color:rgb(15, 105, 106);
-   
+   border-color:#cf8168;
+   margin-left: 6px;
+   margin-right: 6px;
+   background-color:#cf8168;
+   border-radius: 0.25rem;
+   align-items: center;
 
+   display: flex;
+    width: 10%;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 43%;
+    margin-top: 2%;
+    font-size: 70%;
 }
-.entry-button:hover{
-    background-color:rgb(21, 144, 146);
-    border-color:rgb(15, 105, 106);
+
+
+#entry-button:hover{
+    background-color:#d7ba92;
+    border-color :#d7ba92;
   
 }
 .mainDiv{ 

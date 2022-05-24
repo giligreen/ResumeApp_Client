@@ -1,8 +1,6 @@
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
-import Neighborhoods from "../Neighborhoods"
-import PropertyType from "../PropertyType"
-import My_status from "../My_status"
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from "axios";
 import './Form.css';
@@ -17,16 +15,15 @@ export default function Form() {
         {value: 'Accounting'},
     ];
     let navigate = useNavigate();
-    
     const mysubmit = (values) => {
 
         console.log(values)
         debugger
-        axios.get("https://localhost:44331/api/Resumes/"+values.subject,values,{
+        axios.get("https://localhost:44331/api/Resumes/download/"+values.subject,values,{
     }).then((response) => {
         debugger
-                alert(response.data)
-                navigate('/Output/', { state: { data: response.data } })
+                alert(response.data)  
+              
             }).catch((error) => {
                 if (error.response) {
                     console.log(error.response)

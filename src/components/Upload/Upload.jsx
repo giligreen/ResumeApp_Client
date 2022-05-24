@@ -1,167 +1,101 @@
-import React, { Component } from "react";
+import React from "react";
 import Dropzone from "../Dropzone/Dropzone";
 import "./Upload.css";
-import Progress from "../Progress/Progress";
 import { useState } from "react";
 import axios from "axios";
-import { useEffect } from "react";
-import DocViewer from "react-doc-viewer";
-import { IoCloseCircleOutline } from 'react-icons';
-import ImageUploader from "react-images-upload";
+
 
 
 
 export default function Upload(props) {
   const [files, setFiles] = useState([]);
-  const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState({});
-  const [successfullUploaded, setSuccessfullUploaded] = useState(false);
-  const [result, setResult] = useState([]);
-  const [firstTimeDropzone,setfirstTimeDropzone]=useState(true);
+  const [yes, setYes] = useState(false);
+
+  const [showResult, setShowResult] = useState(false);
+
+  const [firstTimeDropzone, setfirstTimeDropzone] = useState(true);
 
   const onFilesAdded = (newFiles) => {
-    if(files===[]){
+    if (files === []) {
       setFiles(files.concat(newFiles))
     }
-    else{
-      setFiles(files[0]=newFiles)
+    else {
+      setFiles(files[0] = newFiles)
     }
     setfirstTimeDropzone(false);
 
-  }
-  const renderProgress = (file) => {
-
-    let uploadProgres = uploadProgress[file.name];
-    if (uploading || successfullUploaded) {
-      return (
-        <div className="ProgressWrapper">
-          <Progress progress={uploadProgres ? uploadProgres.percentage : 0} />
-          {
-            uploadProgres && uploadProgres.state === "done" ?
-
-              <i className="fa fa-check-circle-o " aria-hidden="true"></i>
-              :
-              <i className="fa fa-times-circle-o " aria-hidden="true"></i>
-          }
-        </div>
-      );
-    }
   }
 
   const uploade_file = () => {
     const formData = new FormData();
     formData.append('file', files[0]);
-   
 
-    axios.post('https://localhost:44331/api/Resumes/UploadResume',formData,{
-      })
+    axios.post('https://localhost:44331/api/Resumes/UploadResume', formData, {
+    })
       .then(response => {
-        debugger;
-        console.log(response.statusText)
-        const copy = { ...uploadProgress };
-        copy[files[0].name] = { state: "done", percentage: 100 };
-        setUploadProgress(copy);
-        setSuccessfullUploaded(true)
-        debugger
-        setResult(response.data)
-        console.log(response.data)
-        return true;
+        console.log(response)
+        alert(response.data)
+        if(response.status=200){setYes(true)}
+        setShowResult(true)
+
       })
       .catch((error) => {
         if (error.response) {
           console.log(error.response)
           console.log(error.response.status)
           console.log(error.response.headers)
-          const copy = { ...uploadProgress };
-          copy[files[0].name] = { state: "error", percentage: 0 };
-          setUploadProgress(copy)
-          return false;
         }
       })
   }
+
   const renderActions = () => {
-    if (successfullUploaded) 
-    {
+    if (!firstTimeDropzone) {
       return (
-        <button
-          onClick={() => {
+        <div>
+          <button className="btn1" onClick={() => {
             setFiles([])
-            setResult([])
-            setSuccessfullUploaded(false)
-          }
-          }
-        >
-          Clear
-        </button>
-      );
-    } 
-    else {
-      return (
-        <button
-          disabled={files.length < 0 || uploading}
-          onClick={uploade_file}>
-          Upload
-        </button>
+            setfirstTimeDropzone(true)
+          }}>Clear</button>
+          <button className="btn1" onClick={uploade_file}>Upload</button>
+        </div>
+
       );
     }
+
   }
+
   const renderHtmlFileTag = (file) => {
-  
+
 
     return (
-       //const typeFile=["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
-
-      <object
-        className="pdf-file" data={URL.createObjectURL(file)} type="application/pdf" width="200%" height="200%">
-      </object>
-     //  <DocViewer documents={file} />
-    
-
+      <div className="pdf-file">
+        <object className="file" data={URL.createObjectURL(file)} type="application/pdf" width="200%" height="200%" />
+        <span className="fileName">{file.name}</span>
+      </div>
     )
   }
+
   return (
-  
+
     <div className="Upload mainDiv">
       <span className="Title">Upload File</span>
-      <div className="Content">
-        <div>
-          {firstTimeDropzone?
-          <Dropzone className="drop"
-        
-            onFilesAdded={onFilesAdded}
-            disabled={uploading || successfullUploaded}
-          /> :<></>}
-        </div>
-     
-        <div className="Files">
-          {files.map((file, i) => {
-            return (<div key={i}>
-              <div  className="row">
-                <div  className="col"> {renderHtmlFileTag(file)}</div>
-                <div className="col text" >
-                  <div>
-
-                    <div className="result overflow-auto">
-                      {result ? result.map((res, k) => {
-                        return (<><br></br><div key={k}><p>{res}</p></div></>)
-                      }) : ''}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className='row' key={file.name} >
-                <span  className="Row Filename">{file.name}</span>
-                {renderProgress(file)}
-              </div></div>
-            );
-          })}
-        </div>
-      </div>
+      {
+        firstTimeDropzone ? <div className="drop"><Dropzone onFilesAdded={onFilesAdded} /></div> : null
+      }
+      {
+        showResult?yes?<div>The file was uploaded and successfully categorized</div>:<div>An error occurred while uploading</div>:null
+      }
+      {
+        files.length <= 0 ? null :
+          files.map((file, i) =>
+            <div key={i} className='pdf'>
+              {renderHtmlFileTag(file)}
+            </div>
+          )
+      }
       <div className="Actions">{renderActions()}</div>
     </div>
   );
-
 }
 
 

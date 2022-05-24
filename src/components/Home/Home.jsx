@@ -11,13 +11,10 @@ export default function Home() {
           {/* <li><Link to={'/'} className="nav-link"> Home </Link></li> */}
       
 
-        <Link to={'/jobDetails'}  className="btn btn-primary btn-lg  entry-button" role="button"  >Employer entry</Link>
+        <Link to={'/jobDetails'}  id="entry-button"className="btn btn-primary   btn-lg  " role="button"  >Employer entry</Link>
 
-        <Link to={'/upload'}  className="btn btn-primary btn-lg  entry-button" role="button" >Employee entry</Link>
-        {/* </ul> */}
-        {/* // </nav> */} 
-        {/* // className="nav-link" */}
-    
+        <Link to={'/upload'}  id="entry-button" className="btn btn-primary btn-lg" role="button" >Employee entry</Link>
+     
         </div>                                                                                                                                                                                                                                                                                                            
     )
 }
