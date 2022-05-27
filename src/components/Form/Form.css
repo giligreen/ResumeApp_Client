@@ -7,4 +7,28 @@
     width: 100%;
     
   }
-  
+  .mainDiv{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;}
+
+
+  #search{
+    margin-left: 20px;
+    border-color:#cf8168;
+    margin-left: 6px;
+    margin-right: 6px;
+    background-color:#cf8168;
+    border-radius: 0.25rem;
+    align-items: center;
+ 
+ 
+ }
+ 
+ 
+ #search:hover{
+     background-color:#d7ba92;
+     border-color :#d7ba92;
+   
+ }

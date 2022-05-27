@@ -1,6 +1,7 @@
 import { Button } from 'bootstrap';
 import { Link } from 'react-router-dom';
 import './Home.css'
+import React, { Component }  from 'react';
 
 export default function Home() {
     return (

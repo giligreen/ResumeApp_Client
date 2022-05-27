@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from "axios";
 import './Form.css';
+import React from 'react';
 
 export default function Form() {
     const options = [
@@ -19,12 +20,38 @@ export default function Form() {
 
         console.log(values)
         debugger
-        axios.get("https://localhost:44331/api/Resumes/download/"+values.subject,values,{
-    }).then((response) => {
-        debugger
-                alert(response.data)  
+        axios({
+            url: "https://localhost:44331/api/Resumes/download/"+values.subject,
+            method: 'GET',
+            responseType: 'blob', // important
+        }
+
+    ) .then((response) => response.blob())
+    .then((blob) => {
+      // Create blob link to download
+      const url = window.URL.createObjectURL(
+
+        new Blob([blob]),
+      );
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute(
+        'download',
+        `file.pdf`,
+      );
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+    })
+    // .then((response) => {
+    //     debugger
+    //             alert(response.data)  
+
+    //             myImage.src = URL.createObjectURL(blob);
+
               
-            }).catch((error) => {
+    //         })
+            .catch((error) => {
                 if (error.response) {
                     console.log(error.response)
                     console.log(error.response.status)
@@ -64,7 +91,7 @@ export default function Form() {
                  </div>
             </div> 
             
-            <button style={{ marginTop: '5%' }} type="submit" dir="rtl" >לחיפוש עובד מתאים</button>
+            <button  id='search'className='className="btn btn-primary   btn-lg  "' style={{ marginTop: '5%' }} type="submit" dir="rtl" >Find a suitable employee</button>
         </form >
     )
 }

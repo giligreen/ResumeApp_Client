@@ -9,12 +9,10 @@
    align-items: center;
 
    display: flex;
-    width: 10%;
     align-items: center;
     flex-direction: column;
-    margin-left: 43%;
     margin-top: 2%;
-    font-size: 70%;
+    font-size: 100%;
 }
 
 
