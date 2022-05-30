@@ -17,40 +17,40 @@ export default function Form() {
     ];
     let navigate = useNavigate();
     const mysubmit = (values) => {
-
         console.log(values)
         debugger
-        axios({
-            url: "https://localhost:44331/api/Resumes/download/"+values.subject,
+        fetch("https://localhost:44331/api/Resumes/download/d", {
             method: 'GET',
-            responseType: 'blob', // important
+            headers: {
+              'Content-Type': 'application/pdf',
+            },
         }
 
     ) .then((response) => response.blob())
     .then((blob) => {
       // Create blob link to download
       const url = window.URL.createObjectURL(
-
         new Blob([blob]),
       );
+    //   const b=document.createElement('object')
+    //   b.className="file"
+    //   b.data=url
+    //   b.type="application/pdf"
+    //   b.width="200%" 
+    //   b.height="200%" 
+
       const link = document.createElement('a');
       link.href = url;
+      link.style={color:""}
       link.setAttribute(
         'download',
         `file.pdf`,
       );
+    //   document.body.appendChild(b);
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
     })
-    // .then((response) => {
-    //     debugger
-    //             alert(response.data)  
-
-    //             myImage.src = URL.createObjectURL(blob);
-
-              
-    //         })
             .catch((error) => {
                 if (error.response) {
                     console.log(error.response)
@@ -76,7 +76,8 @@ export default function Form() {
     return (
         <form className='mainDiv' onSubmit={myformik.handleSubmit} style={{ marginLeft: '10%', marginRight: '10%', paddingTop: '12%' }}>
             <div dir="rtl">
-                <h1 style={{ textAlign: 'center' }}>choose the job area</h1>
+                <h1 style={{ textAlign: 'center' ,color: "#d7ba92"
+}}>choose the job area</h1>
                
                 <br></br>
                  <div className="row" >

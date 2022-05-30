@@ -32,6 +32,8 @@
   align-items: center;
   flex-direction: column;
   margin-top: 32px;
+  color: #d7ba92;
+
 }
 
 
@@ -116,9 +118,7 @@ button:disabled {
   font-style: italic;
   color: rgb(5, 98, 141);
 }
-.result{
-  background-color: rgb(136, 200, 230);
-}
+
 .mainDiv{ 
   background-image: url("../../images/bg.jpg");
   background-position: center;
@@ -149,5 +149,14 @@ button:disabled {
   margin-right: 6px;
   background-color: rgb(225, 115, 98);
   border-radius: 0.25rem;
+  color: white;
 
+}
+
+.result{
+  color: #d7ba92;
+  font-size: 40px;
+  /* border-style:dotted */
+text-align: center;
+  
 }

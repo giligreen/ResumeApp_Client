@@ -1,9 +1,10 @@
 import logo from "../images/logo.PNG"
+import React from 'react'
 // import "./RetFille.css"
 
 export default function RetFile(props) {
   const dwonloadFile = () => {
-    fetch("https://localhost:44331/api/Resumes/download", {
+    fetch("https://localhost:44331/api/Resumes/download/d", {
       method: 'GET',
       headers: {
         'Content-Type': 'application/pdf',

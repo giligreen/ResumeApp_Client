@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Download from './components/Download/Download';
 import ImageUploader from "react-images-upload";
 import Form from './components/Form/Form';
+import RetFile from './components/RetFile'
 
 
 
@@ -29,7 +30,7 @@ function App() {
       }
     />
         </Routes> 
-     
+
       
     </div>
   );
