@@ -6,59 +6,102 @@ import axios from "axios";
 import './Form.css';
 import React from 'react';
 
+import { Document, Page,pdfjs } from 'react-pdf';
+
+
 export default function Form() {
+    const [result,setResult]=useState(false)
+    const [start,setStart]=useState(true)
+    const [notFound,setNotFound]=useState(false)
+    const [Url,setUrl]=useState()
+    const [src,setSrc]=useState(false)
+    const [numfile,setNumfile]=useState(0)
+    const [maxNumfile,setMaxNumfile]=useState()
+
     const options = [
         {value: 'Architecture'},
-        {value: 'CompPrograming'},
-        {value: 'GraphicsAndDesign'},
+        {value: 'Software Engineer'},
+        {value: 'Graphics and Design'},
         {value: 'Education'},
-        {value: 'OfficeManagement'},
+        {value: 'Office Management'},
         {value: 'Accounting'},
     ];
-    let navigate = useNavigate();
-    const mysubmit = (values) => {
-        console.log(values)
-        debugger
-        fetch("https://localhost:44331/api/Resumes/download/d", {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/pdf',
-            },
-        }
-
-    ) .then((response) => response.blob())
-    .then((blob) => {
-      // Create blob link to download
-      const url = window.URL.createObjectURL(
-        new Blob([blob]),
-      );
-    //   const b=document.createElement('object')
-    //   b.className="file"
-    //   b.data=url
-    //   b.type="application/pdf"
-    //   b.width="200%" 
-    //   b.height="200%" 
-
+    
+ 
+    const download=()=>{
       const link = document.createElement('a');
-      link.href = url;
-      link.style={color:""}
-      link.setAttribute(
-        'download',
-        `file.pdf`,
-      );
-    //   document.body.appendChild(b);
+      link.href = src[0];
+      // link.className="linkToDownLoad btn btn-primary   btn-lg  "
+      link.setAttribute('download', `file.pdf`,);      
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
-    })
-            .catch((error) => {
-                if (error.response) {
-                    console.log(error.response)
-                    console.log(error.response.status)
-                    console.log(error.response.headers)
-                }
+      setResult(false)
+      setStart(true) 
+    } 
+    const nextFile=()=>{
+      numfile+1>=maxNumfile? setNumfile(0): setNumfile(numfile+1)
+    }   
+    
+
+    const mysubmit = (values) => {
+          axios.get("https://localhost:44331/api/Resumes/search/"+(values.subject),{
+             headers: {
+              'Content-Type': 'application/pdf',
+            },
+          })
+            .then( (response)=> {
+              setResult(true) 
+              debugger;
+              response.status===500? setNotFound(true) :
+              console.log(response.data)
+              setSrc(response.data)
+              setMaxNumfile(response.data.count)
+              setStart(false)   
             })
-    }
+            .catch( (error) =>{
+              //נכשל
+              return <div>faild</div>;
+            });
+        }
+    
+
+
+    // const mysubmit = (values) => {
+    //     console.log(values)
+       
+    //     fetch("https://localhost:44331/api/Resumes/search/"+(values.subject), {
+    //         method: 'GET',
+    //         encoding: null,
+    //         headers: {
+    //           'Content-Type': 'application/pdf',
+    //         },
+    //     }
+        
+    //  ) .then((response) =>{
+    //     debugger;
+    //     response.status===500? setNotFound(true):
+    //     response.clone().blob()
+    //    console.log( response.clone().blob())
+    //  })
+    //  .then((blob) => {
+      
+    //   // Create blob link to download
+    //  //   setUrl(window.URL.createObjectURL( new Blob([blob]), ));
+    //  setUrl(window.URL.createObjectURL(new Blob([blob]),))
+    //        // debugger;
+    //   setResult(true)
+    //   setStart(false)
+    //  })
+    //  .catch((error) => {
+    //             if (error.response) {
+    //                 console.log(error.response)
+    //                 console.log(error.response.status)
+    //                 console.log(error.response.headers)
+    //             }
+    //         })
+    // }
+
     const myformik = useFormik(
         {
             initialValues:
@@ -74,11 +117,12 @@ export default function Form() {
     //החזרת התגית
 
     return (
-        <form className='mainDiv' onSubmit={myformik.handleSubmit} style={{ marginLeft: '10%', marginRight: '10%', paddingTop: '12%' }}>
+        <form className='mainDiv' onSubmit={myformik.handleSubmit} style={{ marginLeft: '10%', marginRight: '10%', paddingTop: '10%' }}>
             <div dir="rtl">
-                <h1 style={{ textAlign: 'center' ,color: "#d7ba92"
+                <h1 className="Title" style={{ textAlign: 'center' ,color: "#d7ba92"
 }}>choose the job area</h1>
-               
+             
+              
                 <br></br>
                  <div className="row" >
                    <div className="form-group col">
@@ -91,8 +135,31 @@ export default function Form() {
                    </div>
                  </div>
             </div> 
-            
-            <button  id='search'className='className="btn btn-primary   btn-lg  "' style={{ marginTop: '5%' }} type="submit" dir="rtl" >Find a suitable employee</button>
+           { 
+           result?           
+            notFound?<div className="faild">Sorry...{<br></br>} there is no employee resume in our database that matches your needs.</div>:
+          // <div className="resultDiv">
+          //     <object className="fileToDownLoad" href={Url}  type="application/pdf" width="200%" height="200%" />
+          //     <button onClick={download} id='linkToDownLoad'className="btn btn-primary btn-lg" style={{ marginTop: '5%' }}  dir="rtl" >download the file</button>
+          // </div>
+        <div className="resultDiv">
+          {src? <iframe className="resultIframe" title="pdf" width="400px" height="500px"  src={`${src[numfile]}`}></iframe>:''}
+          <button onClick={download} id='linkToDownLoad'className="btn btn-primary btn-lg" style={{ marginTop: '5%' }}  dir="rtl" >download the file</button>
+          <button onClick={nextFile} id='nextFile'className="btn btn-primary btn-lg" style={{ marginTop: '5%' }}  dir="rtl" >NEXT</button>
+
+        </div>
+       
+       
+         :<button  type="submit" id='search' className='btn btn-primary   btn-lg' style={{ marginTop: '5%' }}  dir="rtl" >Find a suitable employee</button>
+        
+           } 
+           
+           {/*{   
+            start?
+         <button onClick={mysubmit.bind(this, myformik.values)} type='button' id='search' className='btn btn-primary   btn-lg' style={{ marginTop: '5%' }}  dir="rtl" >Find a suitable employee</button>:''
+           } 
+         */}
+
         </form >
     )
 }

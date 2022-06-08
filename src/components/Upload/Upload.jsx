@@ -77,7 +77,7 @@ export default function Upload(props) {
 
   return (
     showResult? 
-      yes?<div className="result">The file was uploaded and successfully categorized!!<br></br>GOOD LUCK!!</div>:<div  className="result">An error occurred while uploading</div>
+      yes?<div className="result">The file was uploaded and successfully categorized!!<br></br><br></br>SEE YOU SOON :)</div>:<div  className="result">An error occurred while uploading</div>
     :
     <div className="Upload mainDiv">
       <span className="Title">Upload File</span>

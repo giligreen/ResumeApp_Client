@@ -22,6 +22,7 @@
     background-color:#cf8168;
     border-radius: 0.25rem;
     align-items: center;
+    font-size: 100%;
  
  
  }
@@ -32,3 +33,41 @@
      border-color :#d7ba92;
    
  }
+ #linkToDownLoad{
+  margin-left: 125px;
+  border-color:#cf8168;
+  margin-right: 6px;
+  background-color:#cf8168;
+  border-radius: 0.25rem;
+  align-items: center;
+  font-size: 100%;
+
+  
+ }
+ #linkToDownLoad:hover{
+ background-color:#d7ba92;
+ border-color :#d7ba92;
+}
+.resultDiv{
+  width: 500px;
+  height:600px ;
+  margin-top: 32px;
+}
+.resultIframe{
+  align-items: center;
+  margin-left: 45PX;
+}
+
+.fileToDownLoad{
+  width: 100%;
+  height:85%;
+}
+  
+.faild{
+  font-family:'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+  color: #d7ba92;
+  font-size: 40px;
+  /* border-style:dotted */
+text-align: center;
+  
+}
