@@ -7,6 +7,7 @@ import './Form.css';
 import React from 'react';
 
 import { Document, Page,pdfjs } from 'react-pdf';
+import { array } from 'yup';
 
 
 export default function Form() {
@@ -14,7 +15,7 @@ export default function Form() {
     const [start,setStart]=useState(true)
     const [notFound,setNotFound]=useState(false)
     const [Url,setUrl]=useState()
-    const [src,setSrc]=useState(false)
+    const [src,setSrc]=useState([])
     const [numfile,setNumfile]=useState(0)
     const [maxNumfile,setMaxNumfile]=useState()
 
@@ -40,10 +41,10 @@ export default function Form() {
       setStart(true) 
     } 
     const nextFile=()=>{
+     
       numfile+1>=maxNumfile? setNumfile(0): setNumfile(numfile+1)
     }   
     
-
     const mysubmit = (values) => {
           axios.get("https://localhost:44331/api/Resumes/search/"+(values.subject),{
              headers: {
@@ -52,14 +53,24 @@ export default function Form() {
           })
             .then( (response)=> {
               setResult(true) 
-              debugger;
-              response.status===500? setNotFound(true) :
+              response.status===500? setNotFound(true) : 
+              response.data.forEach(element => {
+                src.push(element)
+              });
+
+              setSrc(response.data);    
               console.log(response.data)
-              setSrc(response.data)
-              setMaxNumfile(response.data.count)
+             
+              console.log(src)
+             
+              setMaxNumfile(src.length)
               setStart(false)   
             })
             .catch( (error) =>{
+              console.log(error)
+            
+              setNotFound(true)
+              setResult(true) 
               //נכשל
               return <div>faild</div>;
             });
@@ -121,8 +132,7 @@ export default function Form() {
             <div dir="rtl">
                 <h1 className="Title" style={{ textAlign: 'center' ,color: "#d7ba92"
 }}>choose the job area</h1>
-             
-              
+                
                 <br></br>
                  <div className="row" >
                    <div className="form-group col">
@@ -137,28 +147,30 @@ export default function Form() {
             </div> 
            { 
            result?           
-            notFound?<div className="faild">Sorry...{<br></br>} there is no employee resume in our database that matches your needs.</div>:
+           notFound?<div className="faild">Sorry...{<br></br>} there is no employee resume in our database that matches your needs.</div>:
           // <div className="resultDiv">
           //     <object className="fileToDownLoad" href={Url}  type="application/pdf" width="200%" height="200%" />
           //     <button onClick={download} id='linkToDownLoad'className="btn btn-primary btn-lg" style={{ marginTop: '5%' }}  dir="rtl" >download the file</button>
           // </div>
         <div className="resultDiv">
-          {src? <iframe className="resultIframe" title="pdf" width="400px" height="500px"  src={`${src[numfile]}`}></iframe>:''}
-          <button onClick={download} id='linkToDownLoad'className="btn btn-primary btn-lg" style={{ marginTop: '5%' }}  dir="rtl" >download the file</button>
-          <button onClick={nextFile} id='nextFile'className="btn btn-primary btn-lg" style={{ marginTop: '5%' }}  dir="rtl" >NEXT</button>
+          {src? <iframe className="resultIframe" title="pdf" width="400px" height="500px"  src={`${src[numfile]}`}></iframe>:''} 
+        {/* <embed  src={src[numfile]+"#toolbar=1" } type="application/pdf" width="400px" height="500px"></embed>:''} */}
+
+          {/* <button onClick={download}  id='linkToDownLoad'className="btn btn-primary btn-lg" style={{ marginTop: '5%' }}  dir="rtl" >download the file</button> */}
+          <button type="button" onClick={nextFile}  id='nextFile'className="btn btn-primary btn-lg"   dir="rtl" >NEXT</button>
 
         </div>
-       
-       
-         :<button  type="submit" id='search' className='btn btn-primary   btn-lg' style={{ marginTop: '5%' }}  dir="rtl" >Find a suitable employee</button>
+         :
+         <div>   {   
+            start?
+         <button  type='submit' id='search' className='btn btn-primary   btn-lg' style={{ marginTop: '5%' }}  dir="rtl" >Find a suitable employee</button>:''
+           } 
+         </div>
+        // onClick={mysubmit.bind(this, myformik.values)} <button  type="submit" id='search' className='btn btn-primary   btn-lg' style={{ marginTop: '5%' }}  dir="rtl" >Find a suitable employee</button>
         
            } 
            
-           {/*{   
-            start?
-         <button onClick={mysubmit.bind(this, myformik.values)} type='button' id='search' className='btn btn-primary   btn-lg' style={{ marginTop: '5%' }}  dir="rtl" >Find a suitable employee</button>:''
-           } 
-         */}
+         
 
         </form >
     )

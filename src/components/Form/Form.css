@@ -34,7 +34,7 @@
    
  }
  #linkToDownLoad{
-  margin-left: 125px;
+  margin-left: 90px;
   border-color:#cf8168;
   margin-right: 6px;
   background-color:#cf8168;
@@ -70,4 +70,18 @@
   /* border-style:dotted */
 text-align: center;
   
+}
+#nextFile{
+ 
+  border-color:#cf8168;
+  background-color:#cf8168;
+  border-radius: 0.25rem;
+  align-items: center;
+  margin-left: 200px;
+
+  
+ }
+ #nextFile:hover{
+ background-color:#d7ba92;
+ border-color :#d7ba92;
 }
